@@ -12,27 +12,20 @@ class Neuron:
     Simple neuron class
     """
 
-    def __init__(self, weights: list, bias: float):
+    def __init__(self, bias: float):
         """
         Initializer
         :param weights: weights vertex
         :param bias: bias value
         """
-        self.weights = weights
         self.bias = bias
-        self.weight_track = 0
-
-    def update_weights(self, weights: list):
-        """
-        Updates weights vertex w/ new values
-        :param weights:
-        :return: None
-        """
-        self.weights = weights
+        self.activationValue = None
+        self.sum_value = None
 
     def feed_forward(self, inputs: list, weights: list):
         """
         Feed forward function
+        :param weights:
         :param inputs: input vertex
         :return: activation of dot product of weights & inputs + bias to receive activation value bounded between 0 & 1
         """
@@ -41,8 +34,9 @@ class Neuron:
         print("weights : ", weights)
         for index in range(len(inputs)):  # performs dot product w/ inputs and weights verticies
             temp += (inputs[index] * weights[index])
-
-        return sigmoid_activation(temp + self.bias)
+        self.sum_value = temp + self.bias
+        self.activationValue = sigmoid_activation(self.sum_value)
+        return self.activationValue
 
 
 # weights = [0, 1]
